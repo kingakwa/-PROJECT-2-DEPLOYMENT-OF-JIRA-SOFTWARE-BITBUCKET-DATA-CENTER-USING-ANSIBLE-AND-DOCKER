@@ -16,7 +16,7 @@
 
 **2.** Login to 3 three instances using Git Bash
 
-<img width="803" alt="Image" src="https://github.com/user-attachments/assets/c8cdf2ed-5eb6-48f1-b20e-dbdeaa416a8d" />
+<img width="783" alt="Image" src="https://github.com/user-attachments/assets/2f376c73-f961-4b0f-95b3-4f6a90f3ad37" />
 
 To determine which Git Bash belongs to which node, rename the servers.
 - In each server, Switch as a root user
@@ -35,7 +35,7 @@ To determine which Git Bash belongs to which node, rename the servers.
 
 - Log into the instances again and you will realize that you can identify which Git bash belongs to which server
 
-![image-20240717-194927](https://github.com/user-attachments/assets/695fe011-e358-4735-aa18-783b1ffc1244)
+<img width="755" alt="Image" src="https://github.com/user-attachments/assets/abe8ff2b-5b62-40a0-bc7c-9a4503e3adb9" />
 
 **3.** For all 3 servers create a common user called “ansible”, set a common password, and allow for “Password authentication”  using the following commands for all 3 servers.
   ```sh
@@ -62,7 +62,9 @@ To determine which Git Bash belongs to which node, rename the servers.
 
 - Add **“ansible”** user in each of the following points in the file.
 
-![image-20240717-200615](https://github.com/user-attachments/assets/15f10820-ad74-41a2-b0da-b6c17d4f4241)
+<img width="380" alt="Image" src="https://github.com/user-attachments/assets/0a1482eb-b711-4acb-9e0e-b489ccf56e61" />
+<img width="326" alt="Image" src="https://github.com/user-attachments/assets/76ef3e2a-8964-4632-baac-3ca643c54ec9" />
+
 
 - In the **“Ansible_Control”** Node switch to the created “ansible” user.
   ```sh
