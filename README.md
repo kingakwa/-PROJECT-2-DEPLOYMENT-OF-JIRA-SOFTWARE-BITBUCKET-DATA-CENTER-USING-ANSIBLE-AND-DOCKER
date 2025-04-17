@@ -13,9 +13,10 @@
 
 ## Created Instances
 <img width="758" alt="Image" src="https://github.com/user-attachments/assets/dd8c09d0-441b-4825-8877-10e50c8a0e4c" />
+
 **2.** Login to 3 three instances using Git Bash
 
-![image-20240717-193457](https://github.com/user-attachments/assets/e2ae4bec-945f-444d-8148-90f63829042e)
+<img width="803" alt="Image" src="https://github.com/user-attachments/assets/c8cdf2ed-5eb6-48f1-b20e-dbdeaa416a8d" />
 
 To determine which Git Bash belongs to which node, rename the servers.
 - In each server, Switch as a root user
@@ -26,7 +27,7 @@ To determine which Git Bash belongs to which node, rename the servers.
   ```sh
   nano /etc/hostname
 
-![image-20240717-194643](https://github.com/user-attachments/assets/d5aa3bfc-3691-4cae-a19d-f8d4814ea04a)
+<img width="755" alt="Image" src="https://github.com/user-attachments/assets/850e433e-6474-4425-b01b-8c6db4b452a3" />
 
 - Save the changes and reboot the servers
   ```sh
