@@ -45,10 +45,12 @@ To determine which Git Bash belongs to which node, rename the servers.
   sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config # change password authentication permission to "yes"
   ```
 
-- Navigate to the /etc/ssh/sshd_config path, and uncomment **"PermitRootLogin"** in the sshd_config file.
+- Navigate to the /etc/ssh/sshd_config path, and uncomment **"PermitRootLogin""PubkeyAuthentication"** in the sshd_config file.
   ```sh
   nano /etc/ssh/sshd_config
   ```
+  <img width="337" alt="Image" src="https://github.com/user-attachments/assets/651b38e2-ba0a-42dd-8c63-1a795a59e13b" />
+  
 - Restart the sshd service.
   ```sh
   sudo systemctl restart sshd
@@ -78,9 +80,11 @@ To determine which Git Bash belongs to which node, rename the servers.
 
 You will have something like the above picture
 
-![image-20240717-201024](https://github.com/user-attachments/assets/aeb53d25-35d4-433a-8ab1-43581e9ed07d)
+<img width="460" alt="Image" src="https://github.com/user-attachments/assets/7955ce09-4a72-4ad0-ae33-4d53784885ba" />
 
 **5.** Create a Keypair in the Control node and copy it in the Worker Node so that it won't require a password when the Control node “SSH” into worker nodes. This will facilitate the configuration of the worker nodes or running the playbook via the control node since it won’t be hindered or blocked by asking for a password which we might not be available at every moment to pass that in.
+<img width="450" alt="Image" src="https://github.com/user-attachments/assets/57a57755-2962-475a-a42d-0e0b46ff708a" />
+
 
 - While in the control Node, ensure you are at the home directory of the ansible user or run the following lines to do so.
   ```sh
@@ -94,18 +98,18 @@ You will have something like the above picture
   sudo chmod 700 /home/ansible/.ssh # gives permission to .ssh file to copy it to worker_node
   ```
 
-![image-20240717-201549](https://github.com/user-attachments/assets/a8ff4009-a5b7-426e-870c-aa2b3a95183c)
+<img width="458" alt="Image" src="https://github.com/user-attachments/assets/ff10ee3a-afa6-4390-add4-3b66647b5d96" />
 
 - Copy Keypair to each worker node.
   ```sh
   ssh-copy-id ansible@private_ip
   ```
 
-![image-20240717-201731](https://github.com/user-attachments/assets/e7d09fc4-fb1c-4369-ac17-c1249ffe9173)
+<img width="451" alt="Image" src="https://github.com/user-attachments/assets/b41c6f57-27d8-4160-8506-3c0389eab4fc" />
 
 - Once done, try to “SSH” again to your worker nodes and you won’t be prompted to pass a password.
 
-![image-20240717-201823](https://github.com/user-attachments/assets/d348adb7-e97e-4db7-ab4c-823812bd6029)
+<img width="450" alt="Image" src="https://github.com/user-attachments/assets/b1aafde5-f2fb-49a0-96b7-1774511d07f7" />
 
 **6.** Installing Ansible and Docker packages.
 
@@ -125,11 +129,11 @@ You will have something like the above picture
   ```
 
 **7.** Update the Inventory file in Control Host so that Ansible knows identified the nodes it communicates with when the playbook is run
-
+`ssh ansible@<control-node-ip>`, `vi /etc/ansible/hosts` 
 - In the home directory of the “ansible” user, run this code.
   ```sh
   cd /etc/ansible/
-  sudo nano hosts
+  sudo vi hosts
   ```
 
 - At example 2 section uncomment **"[webservers]"** then pass the private Ip addresses of the Worker nodes beneath.
