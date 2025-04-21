@@ -83,7 +83,6 @@ You will have something like the above picture
 <img width="460" alt="Image" src="https://github.com/user-attachments/assets/7955ce09-4a72-4ad0-ae33-4d53784885ba" />
 
 **5.** Create a Keypair in the Control node and copy it in the Worker Node so that it won't require a password when the Control node “SSH” into worker nodes. This will facilitate the configuration of the worker nodes or running the playbook via the control node since it won’t be hindered or blocked by asking for a password which we might not be available at every moment to pass that in.
-<img width="450" alt="Image" src="https://github.com/user-attachments/assets/57a57755-2962-475a-a42d-0e0b46ff708a" />
 
 
 - While in the control Node, ensure you are at the home directory of the ansible user or run the following lines to do so.
