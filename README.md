@@ -16,7 +16,7 @@
 
 **2.** Login to 3 three instances using Git Bash
 
-<img width="783" alt="Image" src="https://github.com/user-attachments/assets/2f376c73-f961-4b0f-95b3-4f6a90f3ad37" />
+<img width="939" alt="Image" src="https://github.com/user-attachments/assets/2196a418-626b-4cb2-bb13-338227b8c3a3" />
 
 To determine which Git Bash belongs to which node, rename the servers.
 - In each server, Switch as a root user
