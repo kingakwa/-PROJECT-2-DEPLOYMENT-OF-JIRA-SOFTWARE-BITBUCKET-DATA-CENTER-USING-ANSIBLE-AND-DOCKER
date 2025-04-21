@@ -118,6 +118,8 @@ You will have something like the above picture
   ansible --version # check if ansible is installed
   ```
 
+<img width="499" alt="docker and ansible install" src="https://github.com/user-attachments/assets/f67918cc-53b4-46b1-be09-6b2006275854" />
+
 - SSH into each worker node through the Control and install the Docker engine.
   ```sh
   sudo amazon-linux-extras install docker -y # install docker
