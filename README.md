@@ -138,7 +138,7 @@ You will have something like the above picture
 
 - At example 2 section uncomment **"[webservers]"** then pass the private Ip addresses of the Worker nodes beneath.
 
-![image-20240717-202404](https://github.com/user-attachments/assets/c185fb20-ad2a-4389-b399-df8530ca5a56)
+<img width="690" alt="Image" src="https://github.com/user-attachments/assets/a38e944d-94b5-40cc-96bf-5eabafd4fee3" />
 
 **8.** Creating directories and files in the Control Node for the docker-compose file and ansible-playbook
 
@@ -170,32 +170,32 @@ You will have something like the above picture
 
   output:
 
-  ![image-20240717-203501](https://github.com/user-attachments/assets/62fdb45f-1a61-4c02-a12c-eda636b18f62)
+<img width="484" alt="Image" src="https://github.com/user-attachments/assets/67e71da2-ba08-4513-ab1f-b3d467274bda" />
 
 **10.** Creating a Load balancer to route traffic to the Worker Nodes.
 
 - Create a Load balancer Target Group. The target group protocol should be HTTP and port 8080 since in the docker-compose file, we created containers that are open on port 8080 and are mapped on port 8080 of worker nodes. Hit Next.
 
-![image-20240717-203740](https://github.com/user-attachments/assets/15cc65c2-cb2f-4ae8-8619-dcddd08fe440)
+<img width="713" alt="Image" src="https://github.com/user-attachments/assets/2ab517ca-664b-4006-a26e-09e27cb621ce" />
 
 - Select the worker nodes and “include as pending below” then create the target group.
 
-![image-20240717-203833](https://github.com/user-attachments/assets/ce2b756e-eb29-4029-b83a-def68932b505)
+<img width="904" alt="Image" src="https://github.com/user-attachments/assets/6747a488-deb0-4c08-af03-85cfb97f7559" />
 
 Create the Load balancer.
 
 - Choose Application Load balancer
 
-![image-20240717-204301](https://github.com/user-attachments/assets/41cc2383-dd3c-4c5e-a2c3-5b775b10e0ea)
+<img width="596" alt="Image" src="https://github.com/user-attachments/assets/e5997153-692f-431b-ae97-749b57cd5e52" />
 
 - Name the Load balancer and at the level of the Network setting, choose the desired VPC and all subnets.
 - Create a Security group that allows HTTPS and HTTPS traffic from anywhere.
 
-![image-20240717-204549](https://github.com/user-attachments/assets/4630a21b-3183-4963-aa66-8b9e78a009d3)
+<img width="855" alt="Image" src="https://github.com/user-attachments/assets/f87112ac-59be-4e97-9f19-4a7f0d2ec77d" />
 
 - At the level of Listeners and Routing, choose an HTTP protocol listening from port 80, and pass the created target group. Then create the load balancer.
 
-![image-20240717-204707](https://github.com/user-attachments/assets/10931c1d-d044-4c73-9d82-660e8bfa82cd)
+<img width="722" alt="Image" src="https://github.com/user-attachments/assets/5856a1d3-7a8a-43ee-a4bc-b8f2eb7fa7e7" />
 
 **11.** Testing
 
