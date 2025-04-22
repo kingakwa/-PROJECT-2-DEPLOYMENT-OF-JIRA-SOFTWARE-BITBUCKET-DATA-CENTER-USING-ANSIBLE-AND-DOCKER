@@ -1,7 +1,7 @@
 # -PROJECT-2-DEPLOYMENT-OF-JIRA-SOFTWARE-BITBUCKET-DATA-CENTER-USING-ANSIBLE-AND-DOCKER
 
 # JIRA_software-deployment-in-containers-using-Ansible-and-Docker
-![e194738a-a1d4-4932-b5b2-7049dde1007c](https://github.com/user-attachments/assets/fa08b432-3def-4197-bfab-ee6f33b7cf23)
+<img width="922" alt="Image" src="https://github.com/user-attachments/assets/0cccb91e-ab24-4428-84c5-abc64293d8ae" />
 
 **1.** Launching 3 Amazon Linux 2 instances and naming them **“Ansible_Control”**, **“Worker_Node_1”** and **“Worker_Node_2”**. (The security group of Ansible_Control is configured to allow just SSH requests from a desired IP (e.g., my IP) address. The security group of the Worker_Node_1 and Worker_Node_2 is configured to allow SSH traffic from the Ansible_Control and SSH traffic from a desired IP (e.g., my IP).
 
