@@ -180,8 +180,7 @@ You will have something like the above picture
 
 - Select the worker nodes and “include as pending below” then create the target group.
 
-<img width="904" alt="Image" src="https://github.com/user-attachments/assets/6747a488-deb0-4c08-af03-85cfb97f7559" />
-
+<img width="942" alt="Image" src="https://github.com/user-attachments/assets/979a2fe8-9396-4739-a08c-9dc6103b147c" />
 Create the Load balancer.
 
 - Choose Application Load balancer
