@@ -1,4 +1,4 @@
-# -PROJECT-2-DEPLOYMENT-OF-JIRA-SOFTWARE-BITBUCKET-DATA-CENTER-USING-ANSIBLE-AND-DOCKER
+# -PROJECT-2-DEPLOYMENT-OF-JIRA-SOFTWARE-USING-ANSIBLE-AND-DOCKER
 
 # JIRA_software-deployment-in-containers-using-Ansible-and-Docker
 <img width="922" alt="Image" src="https://github.com/user-attachments/assets/0cccb91e-ab24-4428-84c5-abc64293d8ae" />
