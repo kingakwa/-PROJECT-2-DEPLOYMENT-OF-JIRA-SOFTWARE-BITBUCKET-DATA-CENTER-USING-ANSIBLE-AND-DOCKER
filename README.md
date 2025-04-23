@@ -66,7 +66,7 @@ To determine which Git Bash belongs to which node, rename the servers.
   ```
 <img width="636" alt="Image" src="https://github.com/user-attachments/assets/13faed9c-e9f1-4fc8-9583-49fb5c65513b" />  
 
-- Restart the sshd service.
+- Save and restart the sshd service.
   ```sh
   sudo systemctl restart sshd
   ```
