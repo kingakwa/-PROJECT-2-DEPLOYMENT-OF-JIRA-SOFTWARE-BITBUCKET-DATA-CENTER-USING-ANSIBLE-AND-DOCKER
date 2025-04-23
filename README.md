@@ -1,6 +1,15 @@
 # -PROJECT-2-DEPLOYMENT-OF-JIRA-SOFTWARE-USING-ANSIBLE-AND-DOCKER
 
 # JIRA_software-deployment-in-containers-using-Ansible-and-Docker
+##Overview
+This project demonstrates the deployment of JIRA Software in a containerized environment using Ansible for automation and Docker for container orchestration. The goal is to achieve scalability, fault tolerance, and simplified management of the Atlassian tool.
+
+##Architecture
+The deployment architecture includes:
+- Load Balancer: Distributes traffic across multiple Jira nodes.
+- Worker Nodes: Hosts Docker containers running Jira Software.
+- Ansible Playbooks: Automates the deployment process, ensuring consistency and reliability.
+
 <img width="922" alt="Image" src="https://github.com/user-attachments/assets/0cccb91e-ab24-4428-84c5-abc64293d8ae" />
 
 **1.** Launching 3 Amazon Linux 2 instances and naming them **“Ansible_Control”**, **“Worker_Node_1”** and **“Worker_Node_2”**. (The security group of Ansible_Control is configured to allow just SSH requests from a desired IP (e.g., my IP) address. The security group of the Worker_Node_1 and Worker_Node_2 is configured to allow SSH traffic from the Ansible_Control and SSH traffic from a desired IP (e.g., my IP).
@@ -205,6 +214,18 @@ Create the Load balancer.
 - Copy the DNS of the load balancer and paste it on the Browser, you should see this.
 
 ![image-20240717-205519](https://github.com/user-attachments/assets/362693bc-66aa-4eaf-bc6c-8989ff77bc35)
+
+##Troubleshooting
+- Check if docker and ansible is installed `docker --version` `ansible --version`
+- verify docker containers are running `docker ps`
+- Ensure the load balancer security group allows traffic to worker nodes
+- Verify DNS settings and load balancer configuration.
+- check if you are in the right directory to run the ansible playbook.
+
+##Conclusion
+This project successfully demonstrates the deployment of JIRA Software in a containerized environment using Ansible and Docker. By leveraging automation and containerization, the solution ensures scalability, fault tolerance, and ease of management. This approach is ideal for organizations looking to streamline their JIRA Software deployments while maintaining high availability.
+
+
 
 
 
