@@ -1,10 +1,10 @@
 # -PROJECT-2-DEPLOYMENT-OF-JIRA-SOFTWARE-USING-ANSIBLE-AND-DOCKER
 
 # JIRA_software-deployment-in-containers-using-Ansible-and-Docker
-##Overview
+## Overview
 This project demonstrates the deployment of JIRA Software in a containerized environment using Ansible for automation and Docker for container orchestration. The goal is to achieve scalability, fault tolerance, and simplified management of the Atlassian tool.
 
-##Architecture
+## Architecture
 The deployment architecture includes:
 - Load Balancer: Distributes traffic across multiple Jira nodes.
 - Worker Nodes: Hosts Docker containers running Jira Software.
@@ -215,14 +215,16 @@ Create the Load balancer.
 
 ![image-20240717-205519](https://github.com/user-attachments/assets/362693bc-66aa-4eaf-bc6c-8989ff77bc35)
 
-##Troubleshooting
+## Troubleshooting
+
 - Check if docker and ansible is installed `docker --version` `ansible --version`
 - verify docker containers are running `docker ps`
 - Ensure the load balancer security group allows traffic to worker nodes
 - Verify DNS settings and load balancer configuration.
 - check if you are in the right directory to run the ansible playbook.
 
-##Conclusion
+## Conclusion
+
 This project successfully demonstrates the deployment of JIRA Software in a containerized environment using Ansible and Docker. By leveraging automation and containerization, the solution ensures scalability, fault tolerance, and ease of management. This approach is ideal for organizations looking to streamline their JIRA Software deployments while maintaining high availability.
 
 
