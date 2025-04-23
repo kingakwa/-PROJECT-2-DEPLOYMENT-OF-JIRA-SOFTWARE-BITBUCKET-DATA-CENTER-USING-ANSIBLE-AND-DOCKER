@@ -26,8 +26,8 @@ The deployment architecture includes:
 <img width="758" alt="Image" src="https://github.com/user-attachments/assets/dd8c09d0-441b-4825-8877-10e50c8a0e4c" />
 
 
-**2.** Login to 3 three instances using Git Bash
 
+**2.** Login to 3 three instances using Git Bash
 <img width="939" alt="Image" src="https://github.com/user-attachments/assets/2196a418-626b-4cb2-bb13-338227b8c3a3" />
 
 
