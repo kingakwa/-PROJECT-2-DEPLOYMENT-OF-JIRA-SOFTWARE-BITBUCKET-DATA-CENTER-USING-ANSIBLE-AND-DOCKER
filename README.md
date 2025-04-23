@@ -38,7 +38,7 @@ To determine which Git Bash belongs to which node, rename the servers.
 
 - Get into the **“hostname”** file in the /etc/ directory then edit the hostname of each server
   ```sh
-  nano /etc/hostname
+  vi /etc/hostname
 
 <img width="755" alt="Image" src="https://github.com/user-attachments/assets/850e433e-6474-4425-b01b-8c6db4b452a3" />
 
@@ -62,7 +62,7 @@ To determine which Git Bash belongs to which node, rename the servers.
 
 - Navigate to the /etc/ssh/sshd_config path, and uncomment **"PermitRootLogin""PubkeyAuthentication"** in the sshd_config file.
   ```sh
-  nano /etc/ssh/sshd_config
+  vi /etc/ssh/sshd_config
   ```
 <img width="636" alt="Image" src="https://github.com/user-attachments/assets/13faed9c-e9f1-4fc8-9583-49fb5c65513b" />  
 
@@ -74,7 +74,7 @@ To determine which Git Bash belongs to which node, rename the servers.
 **4.** Add ansible to the “sudoers” group in each server.
 - Navigate to the sudoers group file via the following command.
   ```sh
-  nano /etc/sudoers
+  vi /etc/sudoers
   ```
 
 - Add **“ansible”** user in each of the following points in the file.
@@ -162,7 +162,7 @@ You will have something like the above picture
   ```sh
   mkdir ~/jira-docker # make a directory called jira-docker in home directory
   cd ~/jira-docker # navigate to the directory
-  sudo nano docker-compose.yml # create a file called docker-compose.yml and paste in docker compose code
+  sudo vi docker-compose.yml # create a file called docker-compose.yml and paste in docker compose code
   ```
 
 - Paste in the docker-compose code in the **docker-compose.yml** file
@@ -172,7 +172,7 @@ You will have something like the above picture
   ```sh
   mkdir ~/ansible-playbooks # make a directory called sndible-playbook in home directory
   cd ~/ansible-playbooks # navigate to the directory
-  sudo nano deploy_jira.yml # create a file called deploy_jira.yml and paste in ansible playbook file
+  sudo vi deploy_jira.yml # create a file called deploy_jira.yml and paste in ansible playbook file
   ```
 
 - Paste in this ansible-playbook code in the **deploy_jira.yml** file
