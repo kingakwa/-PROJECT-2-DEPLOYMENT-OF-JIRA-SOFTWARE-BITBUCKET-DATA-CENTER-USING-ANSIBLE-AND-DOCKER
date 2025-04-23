@@ -232,8 +232,10 @@ Create the Load balancer.
 
 This project successfully demonstrates the deployment of JIRA Software in a containerized environment using Ansible and Docker. By leveraging automation and containerization, the solution ensures scalability, fault tolerance, and ease of management. This approach is ideal for organizations looking to streamline their JIRA Software deployments while maintaining high availability.
 
+## Contributing
+Contributions are welcome! Please fork the repository and submit a pull request.
 
-
+## happy improving your skills 
 
 
   
