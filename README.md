@@ -12,6 +12,8 @@ The deployment architecture includes:
 
 <img width="922" alt="Image" src="https://github.com/user-attachments/assets/0cccb91e-ab24-4428-84c5-abc64293d8ae" />
 
+## SETUP INSTRUCTIONS
+
 **1.** Launching 3 Amazon Linux 2 instances and naming them **“Ansible_Control”**, **“Worker_Node_1”** and **“Worker_Node_2”**. (The security group of Ansible_Control is configured to allow just SSH requests from a desired IP (e.g., my IP) address. The security group of the Worker_Node_1 and Worker_Node_2 is configured to allow SSH traffic from the Ansible_Control and SSH traffic from a desired IP (e.g., my IP).
 
 ## Ansible security group inbound rule
@@ -23,9 +25,11 @@ The deployment architecture includes:
 ## Created Instances
 <img width="758" alt="Image" src="https://github.com/user-attachments/assets/dd8c09d0-441b-4825-8877-10e50c8a0e4c" />
 
+
 **2.** Login to 3 three instances using Git Bash
 
 <img width="939" alt="Image" src="https://github.com/user-attachments/assets/2196a418-626b-4cb2-bb13-338227b8c3a3" />
+
 
 To determine which Git Bash belongs to which node, rename the servers.
 - In each server, Switch as a root user
@@ -38,6 +42,7 @@ To determine which Git Bash belongs to which node, rename the servers.
 
 <img width="755" alt="Image" src="https://github.com/user-attachments/assets/850e433e-6474-4425-b01b-8c6db4b452a3" />
 
+
 - Save the changes and reboot the servers
   ```sh
   reboot
@@ -45,6 +50,7 @@ To determine which Git Bash belongs to which node, rename the servers.
 - Log into the instances again and you will realize that you can identify which Git bash belongs to which server
 
 <img width="755" alt="Image" src="https://github.com/user-attachments/assets/abe8ff2b-5b62-40a0-bc7c-9a4503e3adb9" />
+
 
 **3.** For all 3 servers create a common user called “ansible”, set a common password, and allow for “Password authentication”  using the following commands for all 3 servers.
   ```sh
@@ -59,6 +65,7 @@ To determine which Git Bash belongs to which node, rename the servers.
   nano /etc/ssh/sshd_config
   ```
 <img width="636" alt="Image" src="https://github.com/user-attachments/assets/13faed9c-e9f1-4fc8-9583-49fb5c65513b" />  
+
 - Restart the sshd service.
   ```sh
   sudo systemctl restart sshd
@@ -71,7 +78,6 @@ To determine which Git Bash belongs to which node, rename the servers.
   ```
 
 - Add **“ansible”** user in each of the following points in the file.
-
 <img width="380" alt="Image" src="https://github.com/user-attachments/assets/0a1482eb-b711-4acb-9e0e-b489ccf56e61" />
 <img width="326" alt="Image" src="https://github.com/user-attachments/assets/76ef3e2a-8964-4632-baac-3ca643c54ec9" />
 
@@ -90,6 +96,7 @@ You will have something like the above picture
 
 <img width="460" alt="Image" src="https://github.com/user-attachments/assets/7955ce09-4a72-4ad0-ae33-4d53784885ba" />
 
+
 **5.** Create a Keypair in the Control node and copy it in the Worker Node so that it won't require a password when the Control node “SSH” into worker nodes. This will facilitate the configuration of the worker nodes or running the playbook via the control node since it won’t be hindered or blocked by asking for a password which we might not be available at every moment to pass that in.
 
 
@@ -107,15 +114,15 @@ You will have something like the above picture
 
 <img width="458" alt="Image" src="https://github.com/user-attachments/assets/ff10ee3a-afa6-4390-add4-3b66647b5d96" />
 
+
 - Copy Keypair to each worker node.
   ```sh
   ssh-copy-id ansible@private_ip
   ```
-
 <img width="451" alt="Image" src="https://github.com/user-attachments/assets/b41c6f57-27d8-4160-8506-3c0389eab4fc" />
 
-- Once done, try to “SSH” again to your worker nodes and you won’t be prompted to pass a password.
 
+- Once done, try to “SSH” again to your worker nodes and you won’t be prompted to pass a password.
 <img width="450" alt="Image" src="https://github.com/user-attachments/assets/b1aafde5-f2fb-49a0-96b7-1774511d07f7" />
 
 **6.** Installing Ansible and Docker packages.
@@ -127,6 +134,7 @@ You will have something like the above picture
   ```
 
 <img width="499" alt="docker and ansible install" src="https://github.com/user-attachments/assets/f67918cc-53b4-46b1-be09-6b2006275854" />
+
 
 - SSH into each worker node through the Control and install the Docker engine.
   ```sh
@@ -146,7 +154,6 @@ You will have something like the above picture
   ```
 
 - At example 2 section uncomment **"[webservers]"** then pass the private Ip addresses of the Worker nodes beneath.
-
 <img width="690" alt="Image" src="https://github.com/user-attachments/assets/a38e944d-94b5-40cc-96bf-5eabafd4fee3" />
 
 **8.** Creating directories and files in the Control Node for the docker-compose file and ansible-playbook
@@ -184,11 +191,9 @@ You will have something like the above picture
 **10.** Creating a Load balancer to route traffic to the Worker Nodes.
 
 - Create a Load balancer Target Group. The target group protocol should be HTTP and port 8080 since in the docker-compose file, we created containers that are open on port 8080 and are mapped on port 8080 of worker nodes. Hit Next.
-
 <img width="713" alt="Image" src="https://github.com/user-attachments/assets/2ab517ca-664b-4006-a26e-09e27cb621ce" />
 
 - Select the worker nodes and “include as pending below” then create the target group.
-
 <img width="942" alt="Image" src="https://github.com/user-attachments/assets/979a2fe8-9396-4739-a08c-9dc6103b147c" />
 Create the Load balancer.
 
