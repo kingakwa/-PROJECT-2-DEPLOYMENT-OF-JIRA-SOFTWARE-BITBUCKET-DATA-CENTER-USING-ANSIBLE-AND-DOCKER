@@ -2,7 +2,7 @@
 
 # JIRA-software-deployment-in-containers-using-Ansible-and-Docker
 ## Overview
-This project demonstrates the deployment of JIRA Software in a containerized environment using Ansible for automation and Docker for container orchestration. The goal is to achieve scalability, fault tolerance, and simplified management of the Atlassian tool.
+This project demonstrates the deployment of JIRA Software in a containerized environment using Ansible for automation and [Docker](https://www.geeksforgeeks.org/docker-tutorial/) for container orchestration. The goal is to achieve scalability, fault tolerance, and simplified management of the Atlassian tool.
 
 ## Architecture
 The deployment architecture includes:
