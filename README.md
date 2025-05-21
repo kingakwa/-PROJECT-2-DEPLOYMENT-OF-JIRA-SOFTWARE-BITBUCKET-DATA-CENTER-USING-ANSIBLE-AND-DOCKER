@@ -92,7 +92,7 @@ To determine which Git Bash belongs to which node, rename the servers.
   ssh ansible@private_ip
   ```
 
-You will have something like the above picture
+You will have something like the below picture
 
 <img width="460" alt="Image" src="https://github.com/user-attachments/assets/7955ce09-4a72-4ad0-ae33-4d53784885ba" />
 
