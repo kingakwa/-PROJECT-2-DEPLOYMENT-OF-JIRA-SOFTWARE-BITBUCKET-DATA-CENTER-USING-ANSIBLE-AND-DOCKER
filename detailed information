@@ -152,92 +152,117 @@ Want a real example showing how to use Ansible to install software or configure 
 
 
 
-
-#📌 **"JIRA Software Deployment in Containers using Ansible and Docker"**
-✅ Using AWS, Ansible, Docker, and terminal-based setup.
-
----
-
-## 📁 **Overview**
-
-You will:
-
-1. Create EC2 instances (control node + worker nodes) in AWS
-2. Install Docker on worker nodes
-3. Install Ansible on control node
-4. Use Ansible to automate deployment of JIRA Software in containers on worker nodes
+ **detailed, step-by-step guide** 
+📌 **“JIRA Software Deployment in Containers using Ansible and Docker”**
+Using: **AWS EC2, Control Node, Worker Nodes, Ansible, Docker, and Terminal**
 
 ---
 
-## 🔧 **STEP 1: Create AWS EC2 Instances**
+## 🧱 Project Architecture
 
-### ➤ Launch 3 EC2 Instances:
-
-* 1 **Control Node** (Ansible installed)
-* 2 **Worker Nodes** (Docker installed)
-
-📝 Choose:
-
-* OS: Amazon Linux 2 or Ubuntu 22.04
-* Instance Type: t2.medium or higher
-* Open ports: 22 (SSH), 8080 (JIRA), 80 (optional)
-
----
-
-## 🖥️ **STEP 2: Connect via Terminal**
-
-SSH into each instance:
-
-```bash
-ssh -i your-key.pem ec2-user@<instance-public-ip>
+```
+[Control Node (EC2)]
+    |
+    | SSH + Ansible
+    v
+[Worker Node 1 (EC2)] <--- Docker + JIRA
+[Worker Node 2 (EC2)] <--- Docker + JIRA
 ```
 
 ---
 
-## 📦 **STEP 3: Install Docker on Worker Nodes**
+## 🔴 Step 1: **Create EC2 Instances in AWS**
 
-On each worker node:
+Create 3 EC2 Instances:
+
+| Role         | Count | OS                      | Ports                 |
+| ------------ | ----- | ----------------------- | --------------------- |
+| Control Node | 1     | Amazon Linux 2 / Ubuntu | 22 (SSH)              |
+| Worker Nodes | 2     | Amazon Linux 2 / Ubuntu | 22 (SSH), 8080 (JIRA) |
+
+### ✅ Instructions:
+
+1. Go to **EC2 Dashboard → Launch Instance**
+2. Choose **Amazon Linux 2** or **Ubuntu 22.04**
+3. Instance type: `t2.medium` or higher
+4. Configure **key pair** (download `.pem` file)
+5. Configure **Security Group**:
+
+   * Allow:
+
+     * TCP 22 (SSH)
+     * TCP 8080 (for JIRA UI)
+     * TCP 80 (optional HTTP)
+6. Launch 3 instances: 1 for control, 2 for workers
+
+---
+
+## 🔵 Step 2: **Connect to EC2 Instances via Terminal**
+
+### On your local terminal:
 
 ```bash
-sudo yum update -y          # Amazon Linux
+chmod 400 your-key.pem  # Make key secure
+
+# Control node
+ssh -i your-key.pem ec2-user@<control-node-public-ip>
+
+# Worker nodes
+ssh -i your-key.pem ec2-user@<worker-node-1-public-ip>
+ssh -i your-key.pem ec2-user@<worker-node-2-public-ip>
+```
+
+---
+
+## 🟢 Step 3: **Install Docker on Worker Nodes**
+
+Repeat on each **worker node**:
+
+### For Amazon Linux:
+
+```bash
+sudo yum update -y
 sudo yum install docker -y
 sudo systemctl start docker
 sudo systemctl enable docker
 sudo usermod -aG docker ec2-user
 ```
 
-For Ubuntu:
+### For Ubuntu:
 
 ```bash
-sudo apt update && sudo apt install -y docker.io
-sudo systemctl start docker && sudo systemctl enable docker
+sudo apt update -y
+sudo apt install -y docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
 sudo usermod -aG docker $USER
 ```
 
 ---
 
-## 🧠 **STEP 4: Install Ansible on Control Node**
+## 🟣 Step 4: **Install Ansible on the Control Node**
 
-SSH into the control node and install Ansible:
+SSH into **Control Node** and run:
 
-### On Amazon Linux:
+### Amazon Linux:
 
 ```bash
 sudo amazon-linux-extras enable ansible2
-sudo yum install ansible -y
+sudo yum install -y ansible
 ```
 
-### On Ubuntu:
+### Ubuntu:
 
 ```bash
-sudo apt update && sudo apt install -y ansible
+sudo apt update
+sudo apt install -y ansible
 ```
 
 ---
 
-## 📂 **STEP 5: Configure Inventory File on Control Node**
+## 🟤 Step 5: **Set Up Ansible Inventory**
 
-Edit or create:
+On control node:
 
 ```bash
 sudo vi /etc/ansible/hosts
@@ -251,26 +276,51 @@ Add:
 <worker-node-2-private-ip>
 ```
 
-Ensure SSH key is copied to worker nodes:
-
-```bash
-ssh-copy-id ec2-user@<worker-node-ip>
-```
+> You can get private IPs from EC2 dashboard.
 
 ---
 
-## 🛠️ **STEP 6: Create Ansible Playbook to Deploy JIRA**
+## 🟠 Step 6: **Enable Passwordless SSH from Control Node to Workers**
 
-Create `jira_deploy.yml`:
+### 1. On Control Node:
+
+```bash
+ssh-keygen  # Press enter to all prompts
+ssh-copy-id ec2-user@<worker-node-1-private-ip>
+ssh-copy-id ec2-user@<worker-node-2-private-ip>
+```
+
+(If using Ubuntu AMI, replace `ec2-user` with `ubuntu`.)
+
+---
+
+## 🔵 Step 7: **Create Ansible Playbook to Deploy JIRA**
+
+### On the Control Node, create the playbook:
+
+```bash
+mkdir ~/jira-deploy && cd ~/jira-deploy
+vi deploy_jira.yml
+```
+
+### Paste this into the file:
 
 ```yaml
-- name: Deploy JIRA Software in Docker Container
+- name: Deploy JIRA Software using Docker
   hosts: jira-nodes
   become: yes
   tasks:
-    - name: Install Docker (if not installed)
-      apt: name=docker.io state=present
-      when: ansible_os_family == "Debian"
+
+    - name: Ensure Docker is installed
+      package:
+        name: docker
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
 
     - name: Pull JIRA Docker image
       docker_image:
@@ -285,36 +335,61 @@ Create `jira_deploy.yml`:
         restart_policy: always
         ports:
           - "8080:8080"
+        volumes:
+          - /opt/jira-home:/var/atlassian/application-data/jira
 ```
 
 ---
 
-## ▶️ **STEP 7: Run the Playbook**
+## 🟣 Step 8: **Run the Ansible Playbook**
+
+On the control node:
 
 ```bash
-ansible-playbook jira_deploy.yml
+ansible-playbook deploy_jira.yml
+```
+
+This will:
+
+* Ensure Docker is running
+* Pull the JIRA container
+* Run the JIRA container on both worker nodes
+
+---
+
+## 🟢 Step 9: **Access JIRA in Your Browser**
+
+Open this URL in your browser:
+
+```bash
+http://<worker-node-1-public-ip>:8080
+```
+
+And/or
+
+```bash
+http://<worker-node-2-public-ip>:8080
 ```
 
 ---
 
-## ✅ **STEP 8: Access JIRA**
+## 🛠️ Optional Tweaks
 
-Open your browser and go to:
-
-```
-http://<worker-node-public-ip>:8080
-```
-
----
-
-## 📌 Notes:
-
-* You may need to increase memory limits or mount volumes for persistent storage.
-* JIRA setup can take a few minutes to initialize on first run.
+* **Persistent storage**: Mount EBS to `/opt/jira-home`
+* **Reverse proxy**: Use NGINX or ALB
+* **HTTPS**: Add SSL with Certbot or behind ALB
+* **Auto-scaling**: Integrate with AWS Auto Scaling Group (ASG)
 
 ---
 
-Would you like me to generate the full Ansible playbook with optimizations or help with Docker volumes/configs for JIRA?
+## ✅ Final Notes
+
+* JIRA startup takes a few minutes
+* First-time setup is through web UI
+* You can configure PostgreSQL instead of internal DB for production
+
+---
+
 
 
 
