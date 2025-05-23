@@ -394,6 +394,158 @@ http://<worker-node-2-public-ip>:8080
 
 
 
+-------------------------------------------------------------------------------------------------------------------------------------------
+ *step-by-step guide to create a custom VPC and subnet** in AWS, and then launch your Control Node and Worker Nodes within it. This ensures **all nodes are in the same isolated network**—a best practice for internal communication (like Ansible SSH access).
+
+---
+
+## 🧱 STEP-BY-STEP: Create VPC and Subnet in AWS
+
+You’ll create:
+
+* A **VPC** (Virtual Private Cloud)
+* A **Subnet**
+* An **Internet Gateway**
+* A **Route Table**
+* And finally **EC2 instances** inside that VPC/subnet
+
+---
+
+### 🔹 Step 1: Go to VPC Dashboard
+
+1. Login to [AWS Console](https://console.aws.amazon.com/)
+2. Search and go to **“VPC”** service
+
+---
+
+### 🔹 Step 2: Create a Custom VPC
+
+1. In the VPC dashboard, click **“Create VPC”**
+2. Choose:
+
+   * **Name tag**: `JIRA-VPC`
+   * **IPv4 CIDR block**: `10.0.0.0/16`
+   * Keep rest as default (no IPv6, no DNS hostname required)
+3. Click **“Create VPC”**
+
+---
+
+### 🔹 Step 3: Create a Subnet
+
+1. Click **“Subnets” → “Create subnet”**
+2. Fill details:
+
+   * **Name tag**: `JIRA-Subnet`
+   * **VPC ID**: Select `JIRA-VPC`
+   * **Availability Zone**: Pick any (e.g., `us-east-1a`)
+   * **IPv4 CIDR block**: `10.0.1.0/24`
+3. Click **“Create subnet”**
+
+---
+
+### 🔹 Step 4: Create Internet Gateway (for SSH/Internet access)
+
+1. In the sidebar, click **“Internet Gateways” → “Create internet gateway”**
+2. Fill:
+
+   * **Name tag**: `JIRA-IGW`
+3. Click **“Create”**
+4. Then click **“Attach to VPC”** and select `JIRA-VPC`
+
+---
+
+### 🔹 Step 5: Configure Route Table
+
+1. Go to **Route Tables** → Find the one created with your VPC
+
+   * Name it: `JIRA-RT`
+2. Select it → go to **Routes tab** → Click **“Edit routes”**
+3. Add a new route:
+
+   * **Destination**: `0.0.0.0/0`
+   * **Target**: `Internet Gateway` → Select `JIRA-IGW`
+4. Save
+
+---
+
+### 🔹 Step 6: Associate Route Table with Subnet
+
+1. Still inside the `JIRA-RT` route table
+2. Go to **“Subnet Associations” → “Edit subnet associations”**
+3. Select `JIRA-Subnet`
+4. Click **“Save associations”**
+
+---
+
+## ✅ Now Your VPC Network is Ready
+
+| Component       | Value            |
+| --------------- | ---------------- |
+| VPC CIDR        | 10.0.0.0/16      |
+| Subnet CIDR     | 10.0.1.0/24      |
+| Internet Access | Via attached IGW |
+| Route           | 0.0.0.0/0 → IGW  |
+
+---
+
+### 🔹 Step 7: Launch EC2 Instances (Control + Workers)
+
+1. Go to **EC2 → Launch Instance**
+2. Launch 3 instances:
+
+   * **AMI**: Amazon Linux 2
+   * **Instance type**: `t2.medium`
+   * **Network**: Select `JIRA-VPC`
+   * **Subnet**: Select `JIRA-Subnet`
+   * **Auto-assign Public IP**: Enable (so you can SSH)
+   * Create or select an existing key pair
+3. Use different **Name tags**:
+
+   * `Ansible_Control`
+   * `Worker_Node_1`
+   * `Worker_Node_2`
+
+---
+
+### 🔹 Step 8: Create Security Groups (during instance launch or separately)
+
+#### For Control Node:
+
+| Type | Port | Source       |
+| ---- | ---- | ------------ |
+| SSH  | 22   | Your IP only |
+
+#### For Worker Nodes:
+
+| Type | Port | Source                                        |
+| ---- | ---- | --------------------------------------------- |
+| SSH  | 22   | Control node **private IP** OR security group |
+| SSH  | 22   | Your IP (optional, for direct login)          |
+| TCP  | 8080 | Your IP (for JIRA UI)                         |
+
+💡 You can allow SSH from the Control Node's **Security Group** instead of IP if easier:
+
+* Source = "Ansible-Control SG"
+
+---
+
+## ✅ Summary
+
+| Resource      | Name          | Notes                         |
+| ------------- | ------------- | ----------------------------- |
+| VPC           | `JIRA-VPC`    | 10.0.0.0/16                   |
+| Subnet        | `JIRA-Subnet` | 10.0.1.0/24                   |
+| IGW           | `JIRA-IGW`    | Internet access               |
+| Route Table   | `JIRA-RT`     | Routes internet to IGW        |
+| EC2 Instances | 3 total       | Control Node + 2 Worker Nodes |
+| Public IPs    | Enabled       | For SSH and Web UI access     |
+
+---
+
+Would you like a diagram of this VPC layout, or a CloudFormation template to automate it?
+
+
+
 
 
 
